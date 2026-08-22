@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block content %}
+<section class="section"><div class="container"><div class="admin-head"><div><h2>Our Menu</h2><p class="muted">Pick a meal, choose quantity and customise it.</p></div><a class="btn" href="/checkout">View Cart</a></div>
+{% set ns=namespace(cat='') %}{% for p in products %}{% if p.category!=ns.cat %}{% if ns.cat %}</div>{% endif %}{% set ns.cat=p.category %}<h2 id="{{p.category|replace(' ','-')}}" style="margin:28px 0 14px">{{p.category}}</h2><div class="grid">{% endif %}
+<article class="product">{% if p.image %}<img src="{{url_for('static',filename='uploads/'+p.image)}}" alt="{{p.name}}">{% else %}<div class="ph">🍽️</div>{% endif %}<div class="product-body"><div class="cat">{{p.category}}</div><h3>{{p.name}}</h3><div class="price">R{{"%.2f"|format(p.price)}}</div><p class="muted">{{p.description}}</p><a class="btn" href="/product/{{p.id}}">Customise & Add</a></div></article>
+{% endfor %}{% if ns.cat %}</div>{% endif %}</div></section>
+<a class="cartbar" href="/checkout">🛒 Cart <span data-cart-count>0</span></a>
+{% endblock %}
